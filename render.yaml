@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: larky
+    runtime: node
+    region: frankfurt
+    plan: starter
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    disk:
+      name: larky-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: LARKY_DATA_FILE
+        value: /var/data/data.json
+      - key: LARKY_CREDENTIAL_FILE
+        value: /var/data/admin-first-login.txt
+      - key: LARKY_LEON_PASSWORD
+        sync: false
+      - key: LARKY_YTCOOLCASTER_PASSWORD
+        sync: false
+      - key: LARKY_ALLOWED_AI_HOSTS
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GEMINI_MODEL
+        value: gemini-2.5-flash
+      - key: GEMINI_IMAGE_MODEL
+        value: gemini-2.5-flash-image
